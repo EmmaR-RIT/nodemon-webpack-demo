@@ -1,8 +1,9 @@
 const fs = require('fs'); 
 
 // Read the client.html and style.css files into memory on server start
-const index = fs.readFileSync(`${__dirname}/../client/client.html`);
-const css = fs.readFileSync(`${__dirname}/../client/style.css`);
+const index = fs.readFileSync(`${__dirname}/../hosted/client.html`);
+const css = fs.readFileSync(`${__dirname}/../hosted/style.css`);
+const script = fs.readFileSync(`${__dirname}/../hosted/bundle.js`);
 
 // A simple helper function for serving up static files
 const serveFile = (response, file, contentType) => {
@@ -24,7 +25,13 @@ const getCSS = (request, response) => {
   serveFile(response, css, 'text/css');
 };
 
+// Serve the bundle.js script
+const getScript = (request, response) => {
+  serveFile(response, script, 'text/javascript');
+};
+
 module.exports = {
   getIndex,
   getCSS,
+  getScript
 };
